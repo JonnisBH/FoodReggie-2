@@ -60,6 +60,7 @@ const FoodListPage: React.FC = () => {
             />
             {error && <p style={{ color: "red" }}>{error}</p>}
             {showTable ? <FoodTable foods={searchFoods} apiUrl={API_URL}/> : <FoodGrid foods={searchFoods} apiUrl={API_URL}/>}
+            <a href="/foodcreate">Register new Food</a>
         </div>
     );
 };
