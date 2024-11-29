@@ -1,30 +1,44 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
+const API_URL = "http://localhost:5149"
 
 const FoodListPage = () => {
-    const foods = [{
-        FoodId: 1,
-        Name: "Chicken",
-        FoodGroup: "Meat",
-        Calories: 111,
-        Protein: 23,
-        Carbohydrates: 0,
-        Fats: 2.1,
-        ImageURL: "images/chicken.jpg"
-    },
-    {
-        FoodId: 2,
-        Name: "Salmon Fillet",
-        FoodGroup: "Meat",
-        Calories: 224,
-        Protein: 20,
-        Carbohydrates: 0,
-        Fats: 16,
-        ImageURL: "/images/salmon.jpg"
-    }];
+    const [foods, setFoods] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const fetchFoods = async () => {
+        setLoading(true);
+        setError(null);
+
+        try{
+            const response = await fetch(`${API_URL}/api/foodapi/foodList`);
+            if(!response.ok){
+                throw new Error("Network response nok ok");
+            }
+            const data = await response.json();
+            setFoods(data);
+            console.log(data);
+        }
+        catch(error){
+            console.error(`Problem with the fetch operation: ${error.message}`);
+            setError("Failed to fetch foods")
+        }
+        finally{
+            setLoading(false);
+        }
+    };
+    useEffect(() => {
+        fetchFoods();
+    }, []);
 
     return (
         <div>
             <h1>Foods</h1>
+            <button onClick={fetchFoods} disabled={loading}>
+                {loading ? "Loading..." : "Refresh Foods"}
+            </button>
+            {error && <p style={{ color: "red" }}>{error}</p>}
             <table>
             <thead>
                 <tr>
@@ -40,15 +54,15 @@ const FoodListPage = () => {
             </thead>
             <tbody>
                 {foods.map(food =>(
-                    <tr key={food.FoodId}>
-                        <td>{food.FoodId}</td>
-                        <td>{food.FoodGroup}</td>
-                        <td>{food.Name}</td>
-                        <td>{food.Calories}</td>
-                        <td>{food.Protein}</td>
-                        <td>{food.Carbohydrates}</td>
-                        <td>{food.Fats}</td>
-                        <td><img src={food.ImageURL} alt={food.Name}/></td>
+                    <tr key={food.foodId}>
+                        <td>{food.foodId}</td>
+                        <td>{food.name}</td>
+                        <td>{food.foodGroup}</td>
+                        <td>{food.calories} kcal</td>          
+                        <td>{food.protein} g</td>
+                        <td>{food.carbohydrates} g</td>
+                        <td>{food.fats} g</td>
+                        <td><img src={`${API_URL}${food.imageURL}`} alt={food.Name}/></td>
                     </tr>
                 ))}
             </tbody>
