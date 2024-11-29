@@ -1,13 +1,19 @@
 import React from "react";
+import { Food } from "../types/food";
 
-const FoodGrid = ({ foods, apiUrl }) => {
+interface FoodGridProps{
+    foods: Food[];
+    apiUrl: string;
+}
+
+const FoodGrid: React.FC<FoodGridProps> = ({ foods, apiUrl }) => {
     return (
         <div>
             <div>
                 {foods.map(food => (
                     <div key={food.foodId}>
                         <div>
-                        <img src={`${apiUrl}${food.imageURL}`} alt={food.name}/>
+                        <img src={`${apiUrl}${food.imageURL}`} alt={food.name} width={123}/>
                             <div>
                                 <h1>{food.name}</h1>
                                 <div>Food Group: {food.foodGroup}</div>

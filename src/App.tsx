@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import HomePage from './home/HomePage';
 import FoodListPage from './food/FoodListPage';
 
-function App() {
+const App: React.FC = () => {
   return (
     <div>
       <nav>

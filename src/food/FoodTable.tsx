@@ -1,6 +1,12 @@
 import React from "react";
+import { Food } from "../types/food";
 
-const FoodTable = ({ foods, apiUrl }) => {
+interface FoodTableProps{
+    foods: Food[];
+    apiUrl: string;
+}
+
+const FoodTable: React.FC<FoodTableProps> = ({ foods, apiUrl }) => {
     return (
         <table>
             <thead>

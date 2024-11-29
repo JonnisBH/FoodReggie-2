@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import FoodTable from "./FoodTable"
 import FoodGrid from "./FoodGrid";
+import { Food } from "../types/food";
+import API_URL from "../apiConfig";
 
-const API_URL = "http://localhost:5149"
-
-const FoodListPage = () => {
+const FoodListPage: React.FC = () => {
     const [foods, setFoods] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -22,7 +22,7 @@ const FoodListPage = () => {
             if(!response.ok){
                 throw new Error("Network response nok ok");
             }
-            const data = await response.json();
+            const data: Food[] = await response.json();
             setFoods(data);
             console.log(data);
         }
@@ -54,7 +54,7 @@ const FoodListPage = () => {
             </button>
             <input
                 type="text"
-                plceholder="Search by name or Food Group"
+                placeholder="Search by name or Food Group"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
             />
