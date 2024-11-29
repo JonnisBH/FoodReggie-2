@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import FoodTable from "./FoodTable"
+import FoodGrid from "./FoodGrid";
 
 const API_URL = "http://localhost:5149"
 
@@ -6,6 +8,10 @@ const FoodListPage = () => {
     const [foods, setFoods] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [showTable, setShowTable] = useState(true);
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const tableOrGrid = () => setShowTable(prevShowTable => ! prevShowTable);
 
     const fetchFoods = async () => {
         setLoading(true);
@@ -32,41 +38,28 @@ const FoodListPage = () => {
         fetchFoods();
     }, []);
 
+    const searchFoods = foods.filter(food =>
+        food.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        food.foodGroup.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <div>
             <h1>Foods</h1>
             <button onClick={fetchFoods} disabled={loading}>
-                {loading ? "Loading..." : "Refresh Foods"}
+                {loading ? "Loading... " : "Refresh Items"}
             </button>
+            <button onClick={tableOrGrid}>
+                {showTable ? "Grid View" : "Table View"}
+            </button>
+            <input
+                type="text"
+                plceholder="Search by name or Food Group"
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+            />
             {error && <p style={{ color: "red" }}>{error}</p>}
-            <table>
-            <thead>
-                <tr>
-                    <th>FoodId</th>
-                    <th>Food Group</th>
-                    <th>Name</th>
-                    <th>Calories</th>
-                    <th>Protein</th>
-                    <th>Carbohydrates</th>
-                    <th>Fats</th>
-                    <th>Image</th>
-                </tr>
-            </thead>
-            <tbody>
-                {foods.map(food =>(
-                    <tr key={food.foodId}>
-                        <td>{food.foodId}</td>
-                        <td>{food.name}</td>
-                        <td>{food.foodGroup}</td>
-                        <td>{food.calories} kcal</td>          
-                        <td>{food.protein} g</td>
-                        <td>{food.carbohydrates} g</td>
-                        <td>{food.fats} g</td>
-                        <td><img src={`${API_URL}${food.imageURL}`} alt={food.Name}/></td>
-                    </tr>
-                ))}
-            </tbody>
-            </table>
+            {showTable ? <FoodTable foods={searchFoods} apiUrl={API_URL}/> : <FoodGrid foods={searchFoods} apiUrl={API_URL}/>}
         </div>
     );
 };
