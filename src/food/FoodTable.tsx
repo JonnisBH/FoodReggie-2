@@ -1,12 +1,14 @@
 import React from "react";
 import { Food } from "../types/food";
+import { Link } from "react-router-dom";
 
 interface FoodTableProps{
     foods: Food[];
     apiUrl: string;
+    onFoodDeleted: (foodId: number) => void;
 }
 
-const FoodTable: React.FC<FoodTableProps> = ({ foods, apiUrl }) => {
+const FoodTable: React.FC<FoodTableProps> = ({ foods, apiUrl, onFoodDeleted }) => {
     return (
         <table>
             <thead>
@@ -19,6 +21,7 @@ const FoodTable: React.FC<FoodTableProps> = ({ foods, apiUrl }) => {
                     <th>Carbohydrates</th>
                     <th>Fats</th>
                     <th>Image</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,6 +35,8 @@ const FoodTable: React.FC<FoodTableProps> = ({ foods, apiUrl }) => {
                         <td>{food.carbohydrates} g</td>
                         <td>{food.fats} g</td>
                         <td><img src={`${apiUrl}${food.imageURL}`} alt={food.name} width={123}/></td>
+                        <td><Link to={`/foodupdate/${food.foodId}`}>Update</Link></td>
+                        <td><Link to="#" onClick={(event) => onFoodDeleted(food.foodId)}>Delete</Link></td>
                 </tr>
                 ))}
             </tbody>

@@ -5,16 +5,22 @@ import { Food } from "../types/food";
 interface FoodFormProps{
     onFoodChanged : (newFood: Food) => void;
     foodId?: number;
+    isUpdate?: boolean;
+    initialData?: Food;
 }
 
-const FoodForm: React.FC<FoodFormProps> = ({onFoodChanged, foodId}) => {
-    const [name, setName] = useState<string>("");
-    const [foodGroup, setFoodGroup] = useState<string>("");
-    const [calories, setCalories] = useState<number>(0);
-    const [protein, setProtein] = useState<number>(0);
-    const [carbohydrates, setCarbohydrates] = useState<number>(0);
-    const [fats, setFats] = useState<number>(0);
-    const [imageURL, setImageURL] = useState<string>("");
+const FoodForm: React.FC<FoodFormProps> = ({
+    onFoodChanged,
+    foodId,
+    isUpdate = false,
+    initialData}) => {
+    const [name, setName] = useState<string>(initialData?.name || "");
+    const [foodGroup, setFoodGroup] = useState<string>(initialData?.foodGroup || "");
+    const [calories, setCalories] = useState<number>(initialData?.calories || 0);
+    const [protein, setProtein] = useState<number>(initialData?.protein || 0);
+    const [carbohydrates, setCarbohydrates] = useState<number>(initialData?.carbohydrates || 0);
+    const [fats, setFats] = useState<number>(initialData?.fats || 0);
+    const [imageURL, setImageURL] = useState<string>(initialData?.imageURL || "");
     const [error] = useState<string | null>(null);
     const navigation = useNavigate();
 
@@ -116,7 +122,7 @@ const FoodForm: React.FC<FoodFormProps> = ({onFoodChanged, foodId}) => {
 
             {error && <p style={{ color: "red"}}>{error}</p>}
 
-            <button type="submit">Register food</button>
+            <button type="submit">{isUpdate ? "Update food" : "Register food"}</button>
             <button type="submit" onClick={onCancel}>Cancel</button>
         </form>
     )

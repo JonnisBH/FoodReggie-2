@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import FoodTable from "./FoodTable"
 import FoodGrid from "./FoodGrid";
-import { Food } from "../types/food";
 import API_URL from "../apiConfig";
+import * as FoodService from "./FoodService";
 
 const FoodListPage: React.FC = () => {
     const [foods, setFoods] = useState([]);
@@ -18,11 +18,7 @@ const FoodListPage: React.FC = () => {
         setError(null);
 
         try{
-            const response = await fetch(`${API_URL}/api/foodapi/foodList`);
-            if(!response.ok){
-                throw new Error("Network response nok ok");
-            }
-            const data: Food[] = await response.json();
+            const data = await FoodService.fetchFoods();
             setFoods(data);
             console.log(data);
         }
@@ -35,13 +31,39 @@ const FoodListPage: React.FC = () => {
         }
     };
     useEffect(() => {
+        const saveView = localStorage.getItem("itemViewMode");
+        console.log("[fetch foods] Saved view mode:", saveView);
+        if(saveView){
+            if(saveView === "grid")
+                setShowTable(false)
+        }
         fetchFoods();
     }, []);
+
+    useEffect(() => {
+        console.log("[save view state] Saving view mode:", showTable ? "table" : "grid");
+        localStorage.setItem("itemViewMode", showTable ? "table" : "grid");
+    }, [showTable]);
 
     const searchFoods = foods.filter(food =>
         food.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         food.foodGroup.toLowerCase().includes(searchQuery.toLowerCase())
     );
+
+    const foodDelete = async (foodId: number) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this food?");
+        if(confirmDelete){
+            try{
+                await FoodService.deleteFood(foodId);
+                setFoods(prevFood => prevFood.filter(food => food.foodId !== foodId));
+                console.log("Food deleted with id:", foodId);
+            }
+            catch(error){
+                console.error("Error when deleting food", error)
+                setError("Food was not deleted")
+            }
+        }
+    };
 
     return (
         <div>
@@ -59,7 +81,7 @@ const FoodListPage: React.FC = () => {
                 onChange={e => setSearchQuery(e.target.value)}
             />
             {error && <p style={{ color: "red" }}>{error}</p>}
-            {showTable ? <FoodTable foods={searchFoods} apiUrl={API_URL}/> : <FoodGrid foods={searchFoods} apiUrl={API_URL}/>}
+            {showTable ? <FoodTable foods={searchFoods} apiUrl={API_URL} onFoodDeleted={foodDelete}/> : <FoodGrid foods={searchFoods} apiUrl={API_URL} onFoodDeleted={foodDelete}/>}
             <a href="/foodcreate">Register new Food</a>
         </div>
     );

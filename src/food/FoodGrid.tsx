@@ -1,12 +1,14 @@
 import React from "react";
 import { Food } from "../types/food";
+import { Link } from "react-router-dom";
 
 interface FoodGridProps{
     foods: Food[];
     apiUrl: string;
+    onFoodDeleted: (foodId: number) => void;
 }
 
-const FoodGrid: React.FC<FoodGridProps> = ({ foods, apiUrl }) => {
+const FoodGrid: React.FC<FoodGridProps> = ({ foods, apiUrl, onFoodDeleted }) => {
     return (
         <div>
             <div>
@@ -21,6 +23,8 @@ const FoodGrid: React.FC<FoodGridProps> = ({ foods, apiUrl }) => {
                                 <div>Protein: {food.protein}g</div>
                                 <div>Carbohydrates: {food.carbohydrates}g</div>
                                 <div>Fats: {food.fats}g</div>
+                                <div><Link to={`/foodupdate/${food.foodId}`}>Update</Link></div>
+                                <div><Link to="#" onClick={(event) => onFoodDeleted(food.foodId)}>Delete</Link></div>
                             </div>
                         </div>
                     </div>
