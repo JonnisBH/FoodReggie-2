@@ -1,6 +1,7 @@
 import React from "react";
 import { Food } from "../types/food";
 import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 interface FoodTableProps{
     foods: Food[];
@@ -10,33 +11,29 @@ interface FoodTableProps{
 
 const FoodTable: React.FC<FoodTableProps> = ({ foods, apiUrl, onFoodDeleted }) => {
     return (
-        <table>
+        <table className="tw-table-auto tw-border-collapse tw-w-full">
             <thead>
                 <tr>
-                    <th>Food ID</th>
-                    <th>Food Group</th>
-                    <th>Name</th>
-                    <th>Calories</th>
-                    <th>Protein</th>
-                    <th>Carbohydrates</th>
-                    <th>Fats</th>
-                    <th>Image</th>
-                    <th>Edit</th>
+                    <th className="tw-p-4 tw-bg-black tw-text-white tw-rounded-tl-lg">Food ID</th>
+                    <th className="tw-p-4 tw-bg-black tw-text-white">Food Group</th>
+                    <th className="tw-p-4 tw-bg-black tw-text-white">Name</th>
+                    <th className="tw-p-4 tw-bg-black tw-text-white">Nutrition values per 100 gram</th>
+                    <th className="tw-p-4 tw-bg-black tw-text-white">Image</th>
+                    <th className="tw-p-4 tw-bg-black tw-text-white tw-rounded-tr-lg">Edit</th>
                 </tr>
             </thead>
             <tbody>
                 {foods.map(food => (
-                    <tr key={food.foodId}>
-                        <td>{food.foodId}</td>
-                        <td>{food.name}</td>
-                        <td>{food.foodGroup}</td>
-                        <td>{food.calories} kcal</td>          
-                        <td>{food.protein} g</td>
-                        <td>{food.carbohydrates} g</td>
-                        <td>{food.fats} g</td>
-                        <td><img src={`${apiUrl}${food.imageURL}`} alt={food.name} width={123}/></td>
-                        <td><Link to={`/foodupdate/${food.foodId}`}>Update</Link></td>
-                        <td><Link to="#" onClick={(event) => onFoodDeleted(food.foodId)}>Delete</Link></td>
+                    <tr key={food.foodId} className="tw-border-b tw-border-gray-300">
+                        <td className="tw-p-4">{food.foodId}</td>
+                        <td className="tw-p-4">{food.name}</td>
+                        <td className="tw-p-4">{food.foodGroup}</td>
+                        <td className="tw-p-4">{food.calories} kcal, {food.protein} g protein, {food.carbohydrates} g carbohydrates, {food.fats} g fat</td>          
+                        <td className="tw-p-4"><img src={`${apiUrl}${food.imageURL}`} alt={food.name} width={123}/></td>
+                        <td className="tw-flex tw-gap-3 tw-p-4">
+                            <Button variant="primary" href={`/foodupdate/${food.foodId}`}>Update</Button>
+                            <Button variant="danger" href="#" onClick={(event) => onFoodDeleted(food.foodId)}>Delete</Button>
+                        </td>
                 </tr>
                 ))}
             </tbody>
