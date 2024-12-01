@@ -7,19 +7,19 @@ import NavMenu from './nav/NavMenu';
 
 const App: React.FC = () => {
   return (
-    <div>
 
-      <Router>
-        <NavMenu/>
+    <Router>
+      <NavMenu />
+      <div className='tw-mx-28 tw-my-6'>
         <Routes>
-          <Route path="/" element={<HomePage/>}/>
-          <Route path="/foods" element={<FoodListPage/>}/>
-          <Route path='/foodcreate' element={<FoodCreatePage/>}/>
-          <Route path='/foodupdate/:foodId' element={<FoodUpdatePage/>}></Route>
+          <Route path="/" element={<HomePage />}/>
+          <Route path="/foods" element={<FoodListPage />}/>
+          <Route path='/foodcreate' element={<FoodCreatePage />}/>
+          <Route path='/foodupdate/:foodId' element={<FoodUpdatePage />}></Route>
           <Route path="*" element={<Navigate to="/" replace/>}/>
         </Routes>
-      </Router>
-    </div>
+      </div>
+    </Router>
   );
 }
 
