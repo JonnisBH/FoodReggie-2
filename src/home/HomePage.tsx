@@ -36,6 +36,7 @@ const HomePage: React.FC = () => {
                 <div className="tw-basis-2/6 tw-flex tw-flex-col tw-space-y-5 tw-justify-center tw-items-center">
                     <h1 className="tw-text-4xl tw-font-bold">Navigation</h1>
                     <Button variant="primary" size="lg" href="/foods">View tool</Button>
+                    <Button variant="primary" size="lg" href="/registrations">User Registrated</Button>
                 </div>
             </div>
         </div>
