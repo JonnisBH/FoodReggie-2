@@ -45,6 +45,11 @@ export const updateFood = async (foodId: number, food: any) => {
     return handleResponse(response);
 }
 
+export const fetchRegistrations = async () => {
+    const response = await fetch(`${API_URL}/api/registrationapi/registrationList`);
+    return handleResponse(response);
+}
+
 export const deleteFood = async (foodId: number) => {
     const response = await fetch(`${API_URL}/api/foodapi/delete/${foodId}`, {
         method: "DELETE",

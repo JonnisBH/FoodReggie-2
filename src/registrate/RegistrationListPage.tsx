@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from "react";
 import RegistrationTable from "./RegistrationTable";
-import API_URL from "../apiConfig";
 import { Registration } from "../types/registration";
+import { fetchRegistrations } from "../food/FoodService";
 
 const RegistrationListPage: React.FC = () => {
     const [registrations, setRegistrations] = useState<Registration[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const fetchRegistrations = async () => {
+    const fetchRegistration = async () => {
         setLoading(true);
         setError(null);
 
         try{
-            const response1 = await fetch(`${API_URL}/api/registrationapi/registrationList`);
-            const data1 = await response1.json();
-            setRegistrations(data1);
+            const data = await fetchRegistrations();
+            setRegistrations(data);
         }
         catch(error){
             console.error("Problem with the fetch operation: ", error);
@@ -27,7 +26,7 @@ const RegistrationListPage: React.FC = () => {
     };
 
     useEffect(() => {
-        fetchRegistrations();
+        fetchRegistration();
     }, []);
 
     return(
