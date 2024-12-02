@@ -8,11 +8,12 @@ import NavMenu from './nav/NavMenu';
 
 const App: React.FC = () => {
   return (
-
+    //This enables routing features
     <Router>
       <NavMenu />
       <div className='tw-mx-28 tw-my-6'>
         <Routes>
+          {/*Defines the routing for different functions*/}
           <Route path="/" element={<HomePage />}/>
           <Route path="/foods" element={<FoodListPage />}/>
           <Route path='/foodcreate' element={<FoodCreatePage />}/>

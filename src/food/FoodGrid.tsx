@@ -2,6 +2,7 @@ import React from "react";
 import { Food } from "../types/food";
 import { Link } from "react-router-dom";
 
+//Defining the FoodGridProps interface to specify excpected props
 interface FoodGridProps{
     foods: Food[];
     apiUrl: string;

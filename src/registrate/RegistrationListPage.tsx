@@ -8,6 +8,7 @@ const RegistrationListPage: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
+    //This function fetches the registrations from the API
     const fetchRegistration = async () => {
         setLoading(true);
         setError(null);
@@ -32,7 +33,9 @@ const RegistrationListPage: React.FC = () => {
     return(
         <div>
             <h1>Registrations</h1>
+            {/*Conditional rendering that renders if the registrations are being fetched*/}
             {loading && <p>Loading...</p>}
+            {/*Conditional rendering that renders the error message if an error occurs*/}
             {error && <p style={{ color: "red" }}>{error}</p>}
             <RegistrationTable
                 registrations={registrations}

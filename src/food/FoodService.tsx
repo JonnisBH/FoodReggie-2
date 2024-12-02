@@ -4,6 +4,7 @@ const headers = {
     "Content-Type" : "application/json",
 };
 
+//Handles the API response of the functions
 const handleResponse = async (response: Response) => {
     if(response.ok){
         if(response.status === 204){
@@ -17,6 +18,7 @@ const handleResponse = async (response: Response) => {
     }
 };
 
+//Fetch a list of food items
 export const fetchFoods = async () => {
     const response = await fetch(`${API_URL}/api/foodapi/foodlist`);
     return handleResponse(response);

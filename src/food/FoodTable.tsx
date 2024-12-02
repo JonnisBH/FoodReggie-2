@@ -3,6 +3,7 @@ import { Food } from "../types/food";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
+//Defining the FoodTableProps interface to specify excpected props
 interface FoodTableProps{
     foods: Food[];
     apiUrl: string;

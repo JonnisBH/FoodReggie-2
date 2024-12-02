@@ -11,6 +11,7 @@ const FoodListPage: React.FC = () => {
     const [showTable, setShowTable] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
 
+    //Toggles between table and grid view
     const tableOrGrid = () => setShowTable(prevShowTable => ! prevShowTable);
 
     const fetchFoods = async () => {
@@ -40,16 +41,19 @@ const FoodListPage: React.FC = () => {
         fetchFoods();
     }, []);
 
+    //Saves the current view mode (table or grid) to localStorage whenever it changes
     useEffect(() => {
         console.log("[save view state] Saving view mode:", showTable ? "table" : "grid");
         localStorage.setItem("itemViewMode", showTable ? "table" : "grid");
     }, [showTable]);
 
+    //Search bar
     const searchFoods = foods.filter(food =>
         food.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         food.foodGroup.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+    //Handling the deletion of a food item
     const foodDelete = async (foodId: number) => {
         const confirmDelete = window.confirm("Are you sure you want to delete this food?");
         if(confirmDelete){
@@ -65,6 +69,7 @@ const FoodListPage: React.FC = () => {
         }
     };
 
+    //The html structure of the code
     return (
         <div>
             <h1>Foods</h1>

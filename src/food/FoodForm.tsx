@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Food } from "../types/food";
 
+//Defining the FoodFormProps interface to specify excpected props
 interface FoodFormProps{
     onFoodChanged : (newFood: Food) => void;
     foodId?: number;
     isUpdate?: boolean;
     initialData?: Food;
 }
+
 
 const FoodForm: React.FC<FoodFormProps> = ({
     onFoodChanged,
@@ -24,10 +26,12 @@ const FoodForm: React.FC<FoodFormProps> = ({
     const [error] = useState<string | null>(null);
     const navigation = useNavigate();
 
+    //Function to go back to the previous page if you want to cancel.
     const onCancel = () => {
         navigation(-1);
     };
 
+    //Submit the form
     const submit = async (event: React.FormEvent) => {
         event.preventDefault();
         const food: Food = {
@@ -45,7 +49,7 @@ const FoodForm: React.FC<FoodFormProps> = ({
                     placeholder="Enter food name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    required
+                    required //Input validation
                     pattern="[a-zA-zæøåÆØÅ. \-]{2,20}"
                     title="The Name must be only letters and between 2 to 20 characters."
                 />
@@ -113,7 +117,7 @@ const FoodForm: React.FC<FoodFormProps> = ({
             <div>
                 <h1>Image Url</h1>
                 <input
-                    type="text"
+                    type="file"
                     placeholder="Enter Image Url"
                     value={imageURL}
                     onChange={(e) => setImageURL(e.target.value)}
@@ -122,6 +126,8 @@ const FoodForm: React.FC<FoodFormProps> = ({
 
             {error && <p style={{ color: "red"}}>{error}</p>}
 
+            {/* When isUpdate is true the button will say update food and if failse it will say Register food. */}
+            {/* True= When you have clicked update button. False= When you are in table view */}
             <button type="submit">{isUpdate ? "Update food" : "Register food"}</button>
             <button type="submit" onClick={onCancel}>Cancel</button>
         </form>

@@ -11,9 +11,11 @@ const FoodUpdatePage: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
+    //useEffect to fetch food details when the foodId changes
     useEffect(() => {
         const fetchFood = async () => {
             try{
+                //Fetch food items by id using the FoodService API function
                 const data = await FoodService.fetchFoodById(foodId);
                 setFood(data);
             }
@@ -27,8 +29,9 @@ const FoodUpdatePage: React.FC = () => {
         };
 
         fetchFood();
-    }, [foodId]);
+    }, [foodId]); //If the foodId changes the hook will run again
 
+    //Handles when the food items get updated
     const foodupdate = async (food: Food) => {
         try{
             const data = await FoodService.updateFood(food.foodId, food);
@@ -40,6 +43,7 @@ const FoodUpdatePage: React.FC = () => {
         }
     }
 
+    //
     if(loading){
         return <p>Loading...</p>
     }
