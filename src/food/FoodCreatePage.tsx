@@ -19,9 +19,11 @@ const FoodCreatePage: React.FC = () => {
     }
 
     return(
-        <div>
-            <h2>Register New Food</h2>
-            <FoodForm onFoodChanged={foodCreated}/>
+        <div className="tw-flex tw-items-center tw-justify-center tw-bg-gray-100">
+            <div className="tw-bg-white tw-p-20 tw-rounded-lg tw-shadow-xl">
+                <h1 className="tw-font-bold tw-text-2xl tw-pb-4">Register New Food</h1>
+                <FoodForm onFoodChanged={foodCreated}/>
+            </div>
         </div>
     );
 };

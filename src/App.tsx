@@ -11,7 +11,7 @@ const App: React.FC = () => {
 
     <Router>
       <NavMenu />
-      <div className='tw-mx-28 tw-my-6'>
+      <div className='tw-px-48 tw-py-16'>
         <Routes>
           <Route path="/" element={<HomePage />}/>
           <Route path="/foods" element={<FoodListPage />}/>

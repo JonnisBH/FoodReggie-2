@@ -31,7 +31,7 @@ const RegistrationListPage: React.FC = () => {
 
     return(
         <div>
-            <h1>Registrations</h1>
+            <h1 className="tw-font-bold tw-text-2xl">Registrations</h1>
             {loading && <p>Loading...</p>}
             {error && <p style={{ color: "red" }}>{error}</p>}
             <RegistrationTable
