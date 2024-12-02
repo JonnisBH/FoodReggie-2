@@ -3,6 +3,7 @@ import FoodTable from "./FoodTable"
 import FoodGrid from "./FoodGrid";
 import API_URL from "../apiConfig";
 import * as FoodService from "./FoodService";
+import Button from 'react-bootstrap/Button';
 
 const FoodListPage: React.FC = () => {
     const [foods, setFoods] = useState([]);
@@ -66,23 +67,27 @@ const FoodListPage: React.FC = () => {
     };
 
     return (
-        <div>
-            <h1>Foods</h1>
-            <button onClick={fetchFoods} disabled={loading}>
-                {loading ? "Loading... " : "Refresh Items"}
-            </button>
-            <button onClick={tableOrGrid}>
-                {showTable ? "Grid View" : "Table View"}
-            </button>
-            <input
-                type="text"
-                placeholder="Search by name or Food Group"
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-            />
+        <div className="overflow-x-auto">
+            <h1 className="tw-font-bold tw-text-2xl">Your List</h1>
+            <div className="tw-flex tw-flex-row tw-gap-3 tw-pb-4">
+                <Button variant="primary" size="sm" onClick={fetchFoods} disabled={loading}>
+                    {loading ? "Loading... " : "Refresh Items"}
+                </Button>
+                <input className="tw-border tw-rounded-lg tw-px-2 tw-py-1"
+                    type="text"
+                    placeholder="Search by name or Food Group"
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                />
+            </div>
             {error && <p style={{ color: "red" }}>{error}</p>}
             {showTable ? <FoodTable foods={searchFoods} apiUrl={API_URL} onFoodDeleted={foodDelete}/> : <FoodGrid foods={searchFoods} apiUrl={API_URL} onFoodDeleted={foodDelete}/>}
-            <a href="/foodcreate">Register new Food</a>
+            <div className="tw-flex tw-gap-3 tw-pt-6">
+                <Button variant="success" href="/foodcreate">Create a new food item</Button>
+                <Button variant="outline-primary" onClick={tableOrGrid}>
+                    {showTable ? "Grid View" : "Table View"}
+                </Button>
+            </div>
         </div>
     );
 };

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Food } from "../types/food";
+import { Button } from "react-bootstrap";
 
 interface FoodFormProps{
     onFoodChanged : (newFood: Food) => void;
@@ -38,9 +39,10 @@ const FoodForm: React.FC<FoodFormProps> = ({
 
     return(
         <form onSubmit={submit}>
-            <div>
-                <h1>Name</h1>
-                <input 
+            <div className="tw-flex tw-flex-row tw-gap-2">
+                <p>Name</p>
+                <input
+                    className="tw-border tw-rounded-lg tw-px-2 tw-py-1 tw-mb-2"
                     type="text"
                     placeholder="Enter food name"
                     value={name}
@@ -50,9 +52,10 @@ const FoodForm: React.FC<FoodFormProps> = ({
                     title="The Name must be only letters and between 2 to 20 characters."
                 />
             </div>
-            <div>
-                <h1>Food Group</h1>
+            <div className="tw-flex tw-flex-row tw-gap-2">
+                <p>Food Group</p>
                 <input
+                    className="tw-border tw-rounded-lg tw-px-2 tw-py-1 tw-mb-2"
                     type="text"
                     placeholder="Enter food group"
                     value={foodGroup}
@@ -62,9 +65,10 @@ const FoodForm: React.FC<FoodFormProps> = ({
                     title="The Food group must be only letters and between 2 to 20 characters."
                 />
             </div>
-            <div>
-                <h1>Calories</h1>
+            <div className="tw-flex tw-flex-row tw-gap-2">
+                <p>Calories</p>
                 <input
+                    className="tw-border tw-rounded-lg tw-px-2 tw-py-1 tw-mb-2"
                     type="number"
                     placeholder="Enter calories"
                     value={calories}
@@ -74,9 +78,10 @@ const FoodForm: React.FC<FoodFormProps> = ({
                     step="0.1"
                 />
             </div>
-            <div>
-                <h1>Protein</h1>
+            <div className="tw-flex tw-flex-row tw-gap-2">
+                <p>Protein</p>
                 <input
+                    className="tw-border tw-rounded-lg tw-px-2 tw-py-1 tw-mb-2"
                     type="number"
                     placeholder="Enter protein"
                     value={protein}
@@ -86,9 +91,10 @@ const FoodForm: React.FC<FoodFormProps> = ({
                     step="0.1"
                 />
             </div>
-            <div>
-                <h1>Carbohydrates</h1>
+            <div className="tw-flex tw-flex-row tw-gap-2">
+                <p>Carbohydrates</p>
                 <input
+                    className="tw-border tw-rounded-lg tw-px-2 tw-py-1 tw-mb-2"
                     type="number"
                     placeholder="Enter carbohydrates"
                     value={carbohydrates}
@@ -98,9 +104,10 @@ const FoodForm: React.FC<FoodFormProps> = ({
                     step="0.1"
                 />
             </div>
-            <div>
-                <h1>Fats</h1>
+            <div className="tw-flex tw-flex-row tw-gap-2">
+                <p>Fats</p>
                 <input
+                    className="tw-border tw-rounded-lg tw-px-2 tw-py-1 tw-mb-2"
                     type="number"
                     placeholder="Enter fats"
                     value={fats}
@@ -110,9 +117,10 @@ const FoodForm: React.FC<FoodFormProps> = ({
                     step="0.1"
                 />
             </div>
-            <div>
-                <h1>Image Url</h1>
-                <input
+            <div className="tw-flex tw-flex-row tw-gap-2">
+                <p>Image Url</p>
+                <input 
+                    className="tw-border tw-rounded-lg tw-px-2 tw-py-1 tw-mb-2"
                     type="text"
                     placeholder="Enter Image Url"
                     value={imageURL}
@@ -122,8 +130,8 @@ const FoodForm: React.FC<FoodFormProps> = ({
 
             {error && <p style={{ color: "red"}}>{error}</p>}
 
-            <button type="submit">{isUpdate ? "Update food" : "Register food"}</button>
-            <button type="submit" onClick={onCancel}>Cancel</button>
+            <Button type="submit" variant="primary">{isUpdate ? "Update food" : "Register food"}</Button>
+            <Button type="submit" variant="link" onClick={onCancel}>Cancel</Button>
         </form>
     )
 }

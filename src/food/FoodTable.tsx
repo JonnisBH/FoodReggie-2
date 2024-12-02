@@ -1,6 +1,5 @@
 import React from "react";
 import { Food } from "../types/food";
-import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
 interface FoodTableProps{
@@ -29,7 +28,7 @@ const FoodTable: React.FC<FoodTableProps> = ({ foods, apiUrl, onFoodDeleted }) =
                         <td className="tw-p-4">{food.name}</td>
                         <td className="tw-p-4">{food.foodGroup}</td>
                         <td className="tw-p-4">{food.calories} kcal, {food.protein} g protein, {food.carbohydrates} g carbohydrates, {food.fats} g fat</td>          
-                        <td className="tw-p-4"><img src={`${apiUrl}${food.imageURL}`} alt={food.name} width={123}/></td>
+                        <td><img src={`${apiUrl}${food.imageURL}`} alt={food.name} width={123}/></td>
                         <td className="tw-flex tw-gap-3 tw-p-4">
                             <Button variant="primary" href={`/foodupdate/${food.foodId}`}>Update</Button>
                             <Button variant="danger" href="#" onClick={(event) => onFoodDeleted(food.foodId)}>Delete</Button>
